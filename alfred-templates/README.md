@@ -1,6 +1,6 @@
 # alfred-templates
 
-Manager emails templates in AWS SES
+Helpful to manage the emails templates in AWS SES
 
 ## References
 
