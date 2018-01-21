@@ -27,7 +27,7 @@ public class TemplateController {
         return Conversions.<TemplateMetadata>completableFutureToFlux().apply(apply);
     }
 
-    @GetMapping("{name}")
+    @GetMapping("/{name}")
     public Mono<Template> getTemplate(@PathVariable String templateName) {
         GetTemplateRequest templateRequest = new GetTemplateRequest().withTemplateName(templateName);
 
@@ -54,7 +54,7 @@ public class TemplateController {
         return "OK";
     }
 
-    @PutMapping("{name}")
+    @PutMapping("/{name}")
     public String putTemplate(@PathVariable String templateName) {
         String templateHtml = "";
 
