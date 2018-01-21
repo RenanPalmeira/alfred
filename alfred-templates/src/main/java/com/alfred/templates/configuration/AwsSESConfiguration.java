@@ -5,8 +5,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.beans.factory.annotation.Value;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
-import com.amazonaws.services.simpleemail.AmazonSimpleEmailService;
-import com.amazonaws.services.simpleemail.AmazonSimpleEmailServiceClientBuilder;
+import com.amazonaws.services.simpleemail.AmazonSimpleEmailServiceAsync;
+import com.amazonaws.services.simpleemail.AmazonSimpleEmailServiceAsyncClientBuilder;
 
 @Configuration
 class AwsSESConfiguration {
@@ -21,11 +21,11 @@ class AwsSESConfiguration {
     private String SECRETKEY;
 
     @Bean
-    AmazonSimpleEmailService ses() {
+    AmazonSimpleEmailServiceAsync ses() {
 
         BasicAWSCredentials credentials = new BasicAWSCredentials(ACCESSKEY, SECRETKEY);
 
-        return AmazonSimpleEmailServiceClientBuilder.standard()
+        return AmazonSimpleEmailServiceAsyncClientBuilder.standard()
               .withCredentials(new AWSStaticCredentialsProvider(credentials))
               // For a complete list, see http://docs.aws.amazon.com/ses/latest/DeveloperGuide/regions.html
               .withRegion(REGION)
