@@ -35,8 +35,8 @@ public class TemplateControllerTests {
     @Test
     public void test_get_to_list_templates() throws Exception {
         this.mockMvc.perform(get("/template/"))
-                .andExpect(status().isOk())
-                .andDo(print());
+                .andDo(print())
+                .andExpect(status().isOk());
     }
 
     @Test
