@@ -11,13 +11,13 @@ import com.amazonaws.services.simpleemail.AmazonSimpleEmailServiceAsync;
 import com.alfred.templates.conversions.Conversions;
 
 @RestController
-@RequestMapping(value = "/template/")
+@RequestMapping(value = "/template")
 public class TemplateController {
 
     @Autowired
     private AmazonSimpleEmailServiceAsync ses;
 
-    @GetMapping
+    @GetMapping("/")
     public Flux<TemplateMetadata> listTemplates() {
         CompletableFuture<List<TemplateMetadata>> apply = Conversions
                 .<ListTemplatesResult>futureToCompletableFuture()
@@ -27,7 +27,7 @@ public class TemplateController {
         return Conversions.<TemplateMetadata>completableFutureToFlux().apply(apply);
     }
 
-    @GetMapping("/{name}")
+    @GetMapping("/{templateName}")
     public Mono<Template> getTemplate(@PathVariable String templateName) {
         GetTemplateRequest templateRequest = new GetTemplateRequest().withTemplateName(templateName);
 
@@ -37,7 +37,7 @@ public class TemplateController {
                 .map(GetTemplateResult::getTemplate);
     }
 
-    @PostMapping
+    @PostMapping("/")
     public String saveTemplate() {
         String templateName = "";
         String templateHtml = "";
@@ -54,7 +54,7 @@ public class TemplateController {
         return "OK";
     }
 
-    @PutMapping("/{name}")
+    @PutMapping("/{templateName}")
     public String putTemplate(@PathVariable String templateName) {
         String templateHtml = "";
 
