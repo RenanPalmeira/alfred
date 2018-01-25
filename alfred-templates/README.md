@@ -2,6 +2,23 @@
 
 Helpful to manage the emails templates in AWS SES
 
+## Configuration 
+
+- create a `a-example-yaml-configuration.yml` in config/ or a folder of your preference
+
+Follow a example of this file:
+
+```
+com.alfred:
+  region: "REGIAN OF YOUR ACCOUNT"
+  accessKey: "YOUR ACCESS KEY HERE"
+  secretKey: "YOUR SECREY KEY HERE"
+```
+
+## Running
+
+`java -jar build/libs/alfred-templates-0.0.1-SNAPSHOT.jar --spring.config.location=config/a-example-yaml-configuration.yml`
+
 ## References
 
 - https://spring.io/blog/2016/09/22/new-in-spring-5-functional-web-framework
