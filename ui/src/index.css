@@ -1,0 +1,30 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background-color: #ffffff;
+}
+
+.container {
+  background-color: #fff;
+  width: 100%;
+  max-width: 100%;
+  padding-top: 50px;
+}
+
+.bg-aws {
+  background-color: #232f3e;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: rgb(255, 255, 255);
+}
+
+.cm-tab {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAMCAYAAAAkuj5RAAAAAXNSR0IArs4c6QAAAGFJREFUSMft1LsRQFAQheHPowAKoACx3IgEKtaEHujDjORSgWTH/ZOdnZOcM/sgk/kFFWY0qV8foQwS4MKBCS3qR6ixBJvElOobYAtivseIE120FaowJPN75GMu8j/LfMwNjh4HUpwg4LUAAAAASUVORK5CYII=);
+  background-repeat: repeat;
+  background-position-x: 0%;
+  background-position-y: 0%;
+  background-position: right;
+  background-repeat: no-repeat;
+}
