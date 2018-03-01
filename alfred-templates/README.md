@@ -28,3 +28,5 @@ com.alfred:
 - https://aws.amazon.com/documentation/ses/
 - https://docs.aws.amazon.com/ses/latest/APIReference/API_ListTemplates.html
 - https://www.concrete.com.br/2017/07/28/reactive-spring-construindo-uma-api-rest-com-reactive-spring-and-spring-boot-2-0/
+- https://github.com/spring-projects/spring-boot/issues/10950
+- http://blog.ippon.tech/spring-5-webflux-performance-tests/

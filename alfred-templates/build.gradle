@@ -1,11 +1,9 @@
 buildscript {
 	ext {
-		springBootVersion = '2.0.0.M7'
+		springBootVersion = '2.0.0.RELEASE'
 	}
 	repositories {
 		mavenCentral()
-		maven { url "https://repo.spring.io/snapshot" }
-		maven { url "https://repo.spring.io/milestone" }
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
@@ -24,37 +22,36 @@ sourceCompatibility = 1.8
 
 repositories {
 	mavenCentral()
-	maven { url "https://repo.spring.io/snapshot" }
-	maven { url "https://repo.spring.io/milestone" }
 }
-
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-webflux')
+	compile('org.springframework.boot:spring-boot-starter-security')
 	compile('com.amazonaws:aws-java-sdk-ses:1.11.263')
 	compile('com.twitter:bijection-core_2.12:0.9.6')
 	compileOnly('org.projectlombok:lombok')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile('io.projectreactor:reactor-test')
+	testCompile('org.springframework.security:spring-security-test')
 }
 
 // https://github.com/gradle/gradle-talks/blob/master/talks/polyglot-gradle/src/slides/01-polyglot-gradle.md#scala-joint-compilation-2
 sourceSets {
-    main {
-        scala {
-            srcDirs = ['src/main/scala', 'src/main/java']
-        }
-        java {
-            srcDirs = []
-        }
-    }
+	main {
+		scala {
+			srcDirs = ['src/main/scala', 'src/main/java']
+		}
+		java {
+			srcDirs = []
+		}
+	}
 }
 
 test {
-    testLogging.showStandardStreams = true
+	testLogging.showStandardStreams = true
 
-    testLogging {
+	testLogging {
 		exceptionFormat = 'full'
-        events "PASSED", "STARTED", "FAILED", "SKIPPED"
-    }
+		events "PASSED", "STARTED", "FAILED", "SKIPPED"
+	}
 }
