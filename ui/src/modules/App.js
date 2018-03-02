@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
-import Template from "../containers/Template/Template"
-import CreateTemplate from "../containers/CreateTemplate/CreateTemplate";
+import ListTemplate from "../containers/ListTemplate/ListTemplate"
+import Template from "../containers/Template/Template";
+import TemplateSend from "../containers/TemplateSend/TemplateSend";
 
 export default class App extends Component {
   render() {
@@ -22,9 +23,11 @@ export default class App extends Component {
             <main role="main" className="container">
                 <Router>
                     <Switch>
-                        <Route exact path="/" component={Template} />
-                        <Route path="/template/create" component={CreateTemplate} />
-                        <Route component={Template} />
+                        <Route exact path="/" component={ListTemplate} />
+                        <Route path="/template/create" component={Template} />
+                        <Route path="/template/:templateName/send" component={TemplateSend} />
+                        <Route path="/template/:templateName" component={Template} />
+                        <Route component={ListTemplate} />
                     </Switch>
                 </Router>
             </main>
