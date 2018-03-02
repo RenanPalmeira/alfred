@@ -18,23 +18,15 @@ import java.util.Date;
 @NoArgsConstructor
 public class TemplateAmazon {
 
-    @NotNull
-    @Size(min = 1)
     @JsonProperty("template_name")
     private String templateName;
 
-    @NotNull
-    @Size(min = 1)
     @JsonProperty("subject_part")
     private String subjectPart;
 
-    @NotNull
-    @Size(min = 1)
     @JsonProperty("text_part")
-    private String textPart;
+    private String textPart = "";
 
-    @NotNull
-    @Size(min = 1)
     @JsonProperty("html_part")
     private String htmlPart;
 
@@ -49,11 +41,12 @@ public class TemplateAmazon {
     public boolean isValid() {
         return getTemplateName()!=null
             && !getTemplateName().isEmpty()
+            && getTemplateName().length() > 3
             && getSubjectPart()!=null
             && !getSubjectPart().isEmpty()
-            && getTextPart()!=null
-            && !getTextPart().isEmpty()
+            && getSubjectPart().length() > 3
             && getHtmlPart()!=null
-            && !getHtmlPart().isEmpty();
+            && !getHtmlPart().isEmpty()
+            && getHtmlPart().length() > 3;
     }
 }
