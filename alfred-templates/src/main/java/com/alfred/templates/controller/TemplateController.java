@@ -1,15 +1,20 @@
 package com.alfred.templates.controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 import com.alfred.templates.model.TemplateAmazon;
 import com.alfred.templates.model.TemplateMetadataAmazon;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.slugify.Slugify;
+import com.googlecode.htmlcompressor.compressor.HtmlCompressor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -19,9 +24,16 @@ import com.alfred.templates.conversions.Conversions;
 
 import javax.validation.Valid;
 
+@Slf4j
 @RestController
 @RequestMapping(value = "/template")
 public class TemplateController {
+
+    @Value("${com.alfred.emailSender}")
+    private String emailSender;
+
+    @Value("${com.alfred.emailReceiver}")
+    private String emailReceiver;
 
     @Autowired
     private AmazonSimpleEmailServiceAsync ses;
@@ -58,20 +70,21 @@ public class TemplateController {
      * @param templateAmazon
      */
     @PostMapping
-    public Mono<ResponseEntity>  saveTemplate(@Valid @RequestBody TemplateAmazon templateAmazon) {
+    public Mono<ResponseEntity> saveTemplate(@Valid @RequestBody TemplateAmazon templateAmazon) {
         if (!templateAmazon.isValid()) {
             return Mono.just(ResponseEntity.badRequest().build());
         }
 
-        String templateName = templateAmazon.getTemplateName();
+        HtmlCompressor compressor = new HtmlCompressor();
+        Slugify slugify = new Slugify();
+
+        String templateName = slugify.slugify(templateAmazon.getTemplateName());
         String subjectPart = templateAmazon.getSubjectPart();
-        String textPart = templateAmazon.getTextPart();
-        String htmlPart = templateAmazon.getHtmlPart();
+        String htmlPart = compressor.compress(templateAmazon.getHtmlPart());
 
         Template template = new Template()
                 .withTemplateName(templateName)
                 .withSubjectPart(subjectPart)
-                .withTextPart(textPart)
                 .withHtmlPart(htmlPart);
 
         CreateTemplateRequest templateRequest = new CreateTemplateRequest()
@@ -90,14 +103,14 @@ public class TemplateController {
             return Mono.just(ResponseEntity.badRequest().build());
         }
 
+        HtmlCompressor compressor = new HtmlCompressor();
+
         String subjectPart = templateAmazon.getSubjectPart();
-        String textPart = templateAmazon.getTextPart();
-        String htmlPart = templateAmazon.getHtmlPart();
+        String htmlPart = compressor.compress(templateAmazon.getHtmlPart());
 
         Template template = new Template()
                 .withTemplateName(templateName)
                 .withSubjectPart(subjectPart)
-                .withTextPart(textPart)
                 .withHtmlPart(htmlPart);
 
         UpdateTemplateRequest updateTemplateRequest = new UpdateTemplateRequest()
@@ -105,6 +118,33 @@ public class TemplateController {
 
         ses.updateTemplateAsync(updateTemplateRequest);
 
+        return Mono.just(ResponseEntity.noContent().build());
+    }
+
+    @PostMapping("/{templateName}/send")
+    public Mono<ResponseEntity> sendTemplateEmailTest(@PathVariable String templateName,
+                                                      @RequestBody Map<String, Map<String, String>> context) {
+
+        String templateData = "{}";
+        try {
+            if (context.get("context") != null) {
+                templateData = new ObjectMapper().writeValueAsString(context.get("context"));
+            }
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        Destination addresses = new Destination()
+                .withToAddresses(emailReceiver);
+
+        SendTemplatedEmailRequest emailRequest = new SendTemplatedEmailRequest()
+                .withTemplateData(templateData)
+                .withTemplate(templateName)
+                .withSource(emailSender)
+                .withDestination(addresses);
+
+        log.warn("Sent a email to '{}' with template '{}'", emailReceiver, templateName);
+        ses.sendTemplatedEmailAsync(emailRequest);
         return Mono.just(ResponseEntity.noContent().build());
     }
 

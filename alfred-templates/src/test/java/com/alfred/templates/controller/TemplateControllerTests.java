@@ -148,4 +148,16 @@ public class TemplateControllerTests {
                 .exchange()
                 .expectStatus().isBadRequest();
     }
+
+    @Test
+    public void test_send_email_template() throws Exception {
+        String jsonForm = "{\"context\": {\"key\": \"value\"}}";
+
+        client.post()
+                .uri("/template/forgetPassword/send")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .body(BodyInserters.fromObject(jsonForm))
+                .exchange()
+                .expectStatus().isNoContent();
+    }
 }
