@@ -24,7 +24,7 @@ export default class CreateTemplate extends React.Component {
         return (
             <div>
                 <form>
-                    <h2>New AWS Template</h2>
+                    <h3>New AWS Template</h3>
                     <div className="ak-field-group">
                         <label htmlFor="TemplateName">Name</label>
                         <input
