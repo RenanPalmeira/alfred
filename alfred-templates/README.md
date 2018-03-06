@@ -21,6 +21,7 @@ com.alfred:
 
 ## References
 
+- https://tedvinke.wordpress.com/2016/03/17/3-steps-for-analyzing-a-gradle-project-with-sonarqube-using-docker/
 - https://spring.io/blog/2016/09/22/new-in-spring-5-functional-web-framework
 - https://dzone.com/articles/spring-5-reactive-web-services
 - https://gist.github.com/ShigeoTejima/f2997f57405010c3caca
