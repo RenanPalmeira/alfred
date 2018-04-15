@@ -1,0 +1,16 @@
+http {
+    port = 8080
+    port = ${?HTTP_PORT}
+}
+
+bot {
+    token = "YOUR BOT TOKEN HERE"
+    chatId = "The chat id to receive messages here"
+}
+
+routes {
+    services = [
+        "YourServiceHere",
+        "YourOtherServiceHere",
+    ]
+}
