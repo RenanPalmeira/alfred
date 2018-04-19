@@ -12,11 +12,12 @@ import org.scalacheck.{ Arbitrary, Gen }
 import org.scalatest.{ FlatSpec, Matchers }
 import org.scalatest.prop.Checkers
 
-class ServerSpec extends FlatSpec with Matchers with Checkers {
-  import Server._
+class PingTimerSpec extends FlatSpec with Matchers with Checkers {
 
-  it should "fetch a index" in {
-    channel(Input.get("/channel")).awaitValueUnsafe() shouldBe Some("Hello, World!")
+  it should "initial timer" in {
+    val timer = PingTimer.run()
+    Thread.sleep(10000)
+    timer.close()
   }
 
 }

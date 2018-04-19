@@ -12,12 +12,12 @@ import com.alfred.nightwatch.configuration.Configuration.{ HttpConfig }
 
 object Server {
 
-  def info: Endpoint[String] = get("info") {
+  val channel: Endpoint[String] = get("channel") {
     Ok("Hello, World!")
   }
 
   def main(): Unit = {
-    val api = (info)
+    val api = (channel)
 
     val server = Http
       .server
