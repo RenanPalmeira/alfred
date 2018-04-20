@@ -8,9 +8,19 @@ import com.alfred.nightwatch.configuration.Configuration.{ BotConfig }
 
 object NightWatchBot extends TelegramBot {
 
-  def token = BotConfig.token
-  val chatId = BotConfig.chatId
+  def token: String = BotConfig.token
+  val chatId: String = BotConfig.chatId
 
-  def send(message: String): Future[Unit] =
-    FuturePool.unboundedPool(request(SendMessage(chatId, message)))
+  def send(message: String, notify: Boolean = false): Future[Unit] =
+    FuturePool.unboundedPool {
+      val telegramMessage: SendMessage = SendMessage(
+        chatId = chatId,
+        text = message,
+        parseMode = Some(ParseMode.Markdown),
+        disableWebPagePreview = Some(true),
+        disableNotification = Some(!notify)
+      )
+
+      request(telegramMessage)
+    }
 }
