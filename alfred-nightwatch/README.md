@@ -4,7 +4,7 @@ Helpful to check if your public services are respond
 
 ## Configuration 
 
-- create a `application.conf` in src/main/resources/ 
+- create a `application.conf` in `src/main/resources/`
 
 Follow a example of this file:
 
