@@ -30,4 +30,5 @@ routes {
 ## Running
 
 `sbt assembly`
+
 `java -jar java -jar target/scala-2.12/nightwatch-0.1.0-SNAPSHOT.jar`
