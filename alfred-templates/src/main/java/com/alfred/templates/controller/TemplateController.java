@@ -123,7 +123,7 @@ public class TemplateController {
 
     @PostMapping("/{templateName}/send")
     public Mono<ResponseEntity> sendTemplateEmailTest(@PathVariable String templateName,
-                                                      @RequestBody Map<String, Map<String, String>> context) {
+                                                      @RequestBody Map<String, Map<String, Object>> context) {
 
         String templateData = "{}";
         try {
